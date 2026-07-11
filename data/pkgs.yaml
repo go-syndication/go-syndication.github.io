@@ -1,0 +1,2 @@
+packages:
+  - { name: "feed", desc: "Pure-Go RSS/Atom/JSONFeed parser and fetcher. CGO=0, zero third-party deps.", url: "https://github.com/go-syndication/feed", doc: "https://pkg.go.dev/github.com/go-syndication/feed" }

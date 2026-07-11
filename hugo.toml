@@ -1,0 +1,4 @@
+baseURL = "https://go-syndication.github.io/"
+languageCode = "en-us"
+title = "go-syndication"
+disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
