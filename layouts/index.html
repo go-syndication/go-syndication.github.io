@@ -1,25 +1,56 @@
-<!doctype html>
-<html lang="en"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-{{/* Dark Reader repaints pages that already draw their own dark theme, as this one does: ask it to stand aside. */}}
-<meta name="darkreader-lock">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ .Site.Title }} — Pure-Go RSS / Atom / JSON Feed parsing and fetching.</title>
 <meta name="description" content="Pure-Go RSS / Atom / JSON Feed parsing and fetching.">
 <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
-<link rel="stylesheet" href="{{ "css/brand.css" | relURL }}">
-<script src="{{ "js/theme.js" | relURL }}"></script>
-</head><body>
-<section class="hero">
-  <button id="themebtn" class="theme" type="button">Theme: System</button>
-  <img src="{{ "img/go-syndication-white.png" | relURL }}" alt="go-syndication">
-  <h1>go-syndication</h1>
-  <p>Pure-Go RSS / Atom / JSON Feed parsing and fetching.</p>
-  <div class="btns">
-    <a class="btn btn-solid" href="https://go-syndication.github.io/docs/">{{ partial "icons/book.html" . }}Documentation</a>
-    <a class="btn btn-ghost" href="https://github.com/go-syndication">{{ partial "icons/mark-github.html" . }}GitHub</a>
-  </div>
-</section>
-<div class="wrap">
+{{ partial "styles.html" . }}
+{{/* The template's own rules for what <main> holds, kept for it alone (class legacy),
+     its colours read from the kit's tokens. Written by landingmigrate. */}}
+<style>
+.legacy{--from:#22CCE2;--to:#0079A8;--dark:#0A6E96;--ink:#0b2530;--muted:var(--slate);--card:var(--bg-soft);--line:#e3ebef;--code:#0b2530;--codei:#d6f3fb;--shadow:rgba(0,60,90,.06);--shadow2:rgba(0,60,90,.10)}
+@media(prefers-color-scheme:dark){:root:not([data-theme]) .legacy{--ink:#e6f2f6;--line:#1f333b;--code:#02090c;--codei:#bfeefb;--shadow:rgba(0,0,0,.4);--shadow2:rgba(0,0,0,.55)}}
+:root[data-theme="dark"] .legacy{--ink:#e6f2f6;--line:#1f333b;--code:#02090c;--codei:#bfeefb;--shadow:rgba(0,0,0,.4);--shadow2:rgba(0,0,0,.55)}
+.legacy .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 26px;box-shadow:0 10px 30px var(--shadow)}
+.legacy .panel h2{color:var(--to);margin:0 0 8px}
+.legacy .panel p{margin:0 0 8px}
+.legacy h2.section{color:var(--to);margin:44px 0 4px}
+.legacy .sub{color:var(--muted);margin:0 0 16px}
+.legacy .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.legacy .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:.15s;display:flex;flex-direction:column;gap:8px}
+.legacy .card:hover{transform:translateY(-2px);box-shadow:0 10px 28px var(--shadow2);border-color:var(--from)}
+.legacy .card .chip{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,var(--from),var(--to));
+  color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;font-family:ui-monospace,Menlo,monospace;font-size:15px}
+.legacy .card .nm{font-weight:700;color:var(--ink);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:16px}
+.legacy .card .ds{font-size:14px;color:var(--muted);flex:1}
+.legacy .card .lk{font-size:13px;font-weight:600}
+</style>
+</head>
+<body class="lm">
+  <header class="nav"><div class="wrap">
+    <a class="brand" href="/"><img class="glyph" src="/favicon.svg" width="32" height="32" alt="go-syndication logo"> {{ .Site.Title }}</a>
+    {{ partial "theme-toggle.html" . }}
+  </div></header>
+  {{ partial "fork-ribbon.html" "https://github.com/go-syndication" }}
+
+  <div class="hero"><div class="wrap">
+    <div>
+      <h1 class="head">go-syndication</h1>
+      <p class="sub">{{ if partial "mantra-on.html" . }}Go{{ else }}Pure-Go{{ end }} RSS / Atom / JSON Feed parsing and fetching.</p>
+      {{/* [[params.cta]] in hugo.toml: the kit renders the row */}}
+      {{ partial "cta.html" . }}
+    </div>
+    {{ partial "hero-carousel.html" . }}
+  </div></div>
+
+  {{ with .Site.Params.repos }}<div class="strip"><div class="wrap">
+    <span class="lead-line">One organisation, <b>{{ len . }}</b> repositories</span>
+    <div class="mods">{{ range . }}<a href="#repos">{{ .name }}</a>{{ end }}</div>
+  </div></div>{{ end }}
+
+  <main id="repos" class="legacy"><div class="wrap">
   <div class="panel">
     <h2>What is go-syndication?</h2>
     <p>go-syndication provides pure-Go parsing and fetching of web syndication feeds. The format is auto-detected from the bytes and RSS 2.0, Atom 1.0 and JSON Feed 1.1 are normalized into a single Feed type, so downstream code never has to branch on the wire format. CGO_ENABLED=0, standard library only, zero third-party dependencies.</p>
@@ -29,6 +60,8 @@
   <div class="grid">
     <div class="card"><div class="chip">FE</div><div class="nm">feed</div><div class="ds">Pure-Go RSS/Atom/JSONFeed parser and fetcher. CGO=0, zero third-party deps.</div><div class="lk"><a href="https://github.com/go-syndication/feed">GitHub</a> · <a href="https://pkg.go.dev/github.com/go-syndication/feed">pkg.go.dev</a></div></div>
   </div>
-</div>
-<footer>Built with Hugo · Pure Go, CGO=0 · Branding from <a href="https://github.com/go-syndication/brand">go-syndication/brand</a></footer>
-</body></html>
+  </div></main>
+
+  <footer><div class="wrap"><span>Built with Hugo · {{ if not (partial "mantra-on.html" $) }}Pure Go, CGO=0 · {{ end }}Branding from <a href="https://github.com/go-syndication/brand">go-syndication/brand</a></span></div></footer>
+</body>
+</html>
